@@ -9,6 +9,7 @@ before_deploy:
   - chmod 600 /tmp/deployment_key.pem
   - ssh-add /tmp/deployment_key.pem
   - rm -f /tmp/deployment_key.pem
+  - echo $TRAVIS_BUILD_DIR
 deploy:
   provider: script
   skip_cleanup: true
