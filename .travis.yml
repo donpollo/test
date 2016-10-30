@@ -3,4 +3,8 @@ node_js: node
 install:
   - npm install
 deploy:
-  ls
+  provider: script
+  skip_cleanup: true
+  script: ls
+  on:
+    branch: master
