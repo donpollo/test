@@ -14,7 +14,6 @@ deploy:
   provider: script
   skip_cleanup: true
   script: 
-   - rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR node_user@163.172.151.151:~
-   - ssh node_user@163.172.151.151 "pm2 restart test"
+   rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR node_user@163.172.151.151:~ && ssh node_user@163.172.151.151 "pm2 restart test"
   on:
     branch: master
