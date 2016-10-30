@@ -1,15 +1,16 @@
 language: node_js
 addons:
-  ssh_known_hosts: HOST
+  ssh_known_hosts: 163.172.151.151
 node_js: node
-install:
-- npm install
+install: npm install
+before_deploy:
+  - openssl aes-256-cbc -K $encrypted_a38144795215_key -iv $encrypted_a38144795215_iv -in deployment_key.pem.enc -out /tmp/deployment_key.pem -d
+  - eval "$(ssh-agent -s)"
+  - chmod 600 /tmp/deployment_key.pem
+  - ssh-add /tmp/deployment_key.pem
 deploy:
   provider: script
   skip_cleanup: true
-  script: echo HOST
+  script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR kevin@163.172.151.151:test
   on:
     branch: master
-env:
-  global:
-    secure: dh8NfoCmNehTFqj2KE259v3LppyF+hiSt6ZepIsKyCne3066yb0c2aqX69rRFRRdP/Gi5fwm3DHkX+5LtEtjU/BwPGcWRG8tapb+z2W1ent16wda//BknxKM/byDbbN3ORQSyFMhNKo4+ErzEnj646xgK37Z88d4hJvv0/h/L/YNSggLkIoNO8I0mg/Ux6jmP0p/knAp4jrcbqBThAv9Q6/u1+P+vwfnHcc9KADoHmn1eFdGxQY3U3W4OJmRgNSuEGkT/otKmgvXsFvP8A8gzvEH6vAWZ4pP9UK4NC9e/uwoYwXOL4kGS0BnJ0HPVsZp5Jx/pbuB21+X3rT+hkc36i83NIa5Moc+K/KqogVmzkpcmMyDtc8K8TJuveAt5ew3eq6DteQtau/Yqc6qJc3A8tlCpmO/AxAHSbIXeNjwB8XrSFsBE2DFUoGrxwMDja+XaIy6FVZ8GSESo+10exod0r87v1cFpdXv1S7npZEWfSBGVhpSeOncVQUYYF1E3uTzOJqft+oLTAxB4sJQEnaDK25jv/HU+y9Bpib8whRx0eDd10n4eq43VAoBQ0i+M5IrcwKPwIfakez4MSnYDyMkDqOmLsotguiWP6iWi3KsPmZ+8YJxucH2y51BOSb3ZbcZnDOx9oWuCtEFCxupTOo15cPJEOiAP+HQhEotFEKOmpQ=
