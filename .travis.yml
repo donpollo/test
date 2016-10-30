@@ -2,10 +2,11 @@ language: node_js
 node_js: node
 install:
   - npm install
-script: echo 'No tests'
 deploy:
   provider: script
   skip_cleanup: true
-  script: ls
+  script: 
+    - ls
+    - ls -la
   on:
     branch: master
