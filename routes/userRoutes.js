@@ -7,7 +7,7 @@ const server = Server.server;
 
 // Get all users
 var getUsersConfig = Server.createRouteConfig(
-    'List all users',
+    'List all users test',
     {
         200: {
             description: 'Success',
